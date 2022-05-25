@@ -69,6 +69,28 @@ app.post('/products', async (req,res) => {
 
 })
 
+app.delete('/products', async (req,res) => {
+  if(req.body.id){
+    
+    let productToDelete = await Product.findByPk(req.body.id)
+
+    if(productToDelete){
+      
+      await productToDelete.destroy()
+
+      res.status(200)
+      res.send("Eliminado")
+    }else{
+      res.status(404)
+      res.send("No encontrado")
+    }
+
+  }else{
+    res.status(400)
+    res.send("Faltan datos")
+  }
+})
+
 app.get('/products-create', async (req,res) => {
   await Product.create({
     productName: "Rexona MaxSports",
