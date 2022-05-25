@@ -14,14 +14,59 @@ const {Product} = require('./src/db/models')
 
 app.get('/products', async (req,res) => {
   let data = await Product.findAll()
-
-  res.send(data)
+  
+  if(data.length > 0){
+    res.status(200)
+    res.send(data)
+  }else{
+    res.status(204)
+    res.send("No Content")
+  }
+  
 })
 
 app.get('/products/:id', async (req,res) => {
   let data = await Product.findByPk(req.params.id);
+  
+  if(data){
+    res.status(200)
+    res.send(data)
+  }else{
+    res.status(204)
+    res.send("No Content")
+  }
+})
 
-  res.send(data)
+app.post('/products', async (req,res) => {
+    if(req.body.productName && req.body.description && req.body.category){
+
+      let productSearch = {
+        productName: req.body.productName,
+        category: req.body.category
+      }
+
+      let q = await Product.count({
+        where: {
+          ...productSearch
+        }
+      })
+
+      if(q==0){
+
+        let ret = await Product.create({
+          ...req.body
+        })
+        res.status(201)
+        res.send(ret.dataValues)
+      }else{
+        res.status(200)
+        res.send("Ya existente")
+      }
+    }else{
+      res.status(400)
+      res.send("Faltan datos")
+    }
+
 })
 
 app.get('/products-create', async (req,res) => {
@@ -35,11 +80,12 @@ app.get('/products-create', async (req,res) => {
     description: "Desodorante Rexona 350ml - Blancos mas blancos",
     category: 1
   })
-
+  res.status(201)
   res.send('Created')
 })
 
 app.get('/', (req, res) => {
+    res.status(200)
     res.send('Hello World!!')
   })
 
