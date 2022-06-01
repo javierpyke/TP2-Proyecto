@@ -38,11 +38,10 @@ app.get('/products/:id', async (req,res) => {
 })
 
 app.post('/products', async (req,res) => {
-    if(req.body.productName && req.body.description && req.body.category){
+    if(req.body.productName && req.body.description && req.body.category && req.body.productCode){
 
       let productSearch = {
-        productName: req.body.productName,
-        category: req.body.category
+        productCode: req.body.productCode
       }
 
       let q = await Product.count({
@@ -59,7 +58,7 @@ app.post('/products', async (req,res) => {
         res.status(201)
         res.send(ret.dataValues)
       }else{
-        res.status(200)
+        res.status(422)
         res.send("Ya existente")
       }
     }else{
@@ -73,12 +72,14 @@ app.get('/products-create', async (req,res) => {
   await Product.create({
     productName: "Rexona MaxSports",
     description: "Desodorante Rexona 300ml - Duracion prolongada",
-    category: 1
+    category: 1,
+    productCode: "AAA0001"
   })
   await Product.create({
     productName: "Rexona MasBlancos",
     description: "Desodorante Rexona 350ml - Blancos mas blancos",
-    category: 1
+    category: 1,
+    productCode: "AAA0002"
   })
   res.status(201)
   res.send('Created')
