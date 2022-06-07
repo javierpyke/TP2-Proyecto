@@ -14,14 +14,26 @@ const {Product} = require('./src/db/models')
 
 app.get('/products', async (req,res) => {
   let data = await Product.findAll()
-
-  res.send(data)
+  
+  if(data.length > 0){
+    res.status(200)
+    res.json(data)
+  }else{
+    res.status(404)
+    res.send("No Content")
+  }
+  
 })
 
 app.get('/products/:id', async (req,res) => {
   let data = await Product.findByPk(req.params.id);
-
-  res.send(data)
+  if(data){
+    res.status(200)
+    res.send(data)
+  }else{
+    res.status(404)
+    res.send("No Content")
+  }
 })
 
 app.get('/products-create', async (req,res) => {
