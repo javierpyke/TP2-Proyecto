@@ -29,7 +29,7 @@ app.get('/products/:id', async (req,res) => {
   let data = await Product.findByPk(req.params.id);
   if(data){
     res.status(200)
-    res.send(data)
+    res.json(data)
   }else{
     res.status(404)
     res.send("No Content")
@@ -55,7 +55,7 @@ app.post('/products', async (req,res) => {
           ...req.body
         })
         res.status(201)
-        res.send(ret.dataValues)
+        res.json(ret.dataValues)
       }else{
         res.status(422)
         res.send("Ya existente")
