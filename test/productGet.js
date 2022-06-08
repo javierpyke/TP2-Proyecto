@@ -38,9 +38,13 @@ describe('Dont get any product: ',()=>{
     it('Should NOT get a product', (done) => {
     axios.get("http://127.0.0.1:8080/products/0")
         .then((res) => {
-            console.log(res.data)
-            //assert.equal(res.status,204,'Status is 204')
-            assert.exists(res.data,'Does NOT contains a product')
+            //console.log(res.data)
+            assert.equal(res.status,404,'Status is 404')
+            //assert.exists(res.data,'Does NOT contains a product')
+            done()
+        }).catch((err) => {
+            //console.log(err)
+            assert.equal(err.response.status,404,'Status is 404')
             done()
         })
     });
