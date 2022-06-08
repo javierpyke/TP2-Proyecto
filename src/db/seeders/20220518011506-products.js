@@ -1,5 +1,5 @@
 'use strict';
-const {randProductName , randProductDescription, rand, randFlightNumber } = require('@ngneat/falso');
+const {randProductName, randProductDescription, rand, randFlightNumber, randFloat } = require('@ngneat/falso');
 
 
 module.exports = {
@@ -13,6 +13,7 @@ module.exports = {
         description: randProductDescription(),
         category: rand([ 1, 2, 3 ]),
         productCode: randFlightNumber(),//simulates productCode
+        price: randFloat({ min: 100, max: 10000, fraction: 2 }),
         createdAt: new Date(),
         updatedAt: new Date(),
       })

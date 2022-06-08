@@ -6,7 +6,8 @@ let testproduct =
     productName: "Par de cubiertos",
     description: "Juego de cubiertos metalicos",
     category: 3,
-    productCode: "Cubi0003Met"
+    productCode: "Cubi0003Met",
+    price: 888.50
 };
 
 describe('Post a new product: ',()=>{

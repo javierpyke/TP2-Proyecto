@@ -36,8 +36,38 @@ app.get('/products/:id', async (req,res) => {
   }
 })
 
+app.patch('/products/:id', async (req,res) => {
+  console.log(req.body)
+  if(req.body.data.discount){
+    if(req.body.data.discount <= 100){
+      let discount = req.body.data.discount
+      let product = await Product.findByPk(req.params.id);
+      if(product){
+        console.log("oldprice:"+product.price)
+        let newPrice = (100-discount) * product.price / 100
+        console.log("newPrice:"+newPrice)
+        let ret = await product.update({ price: newPrice })
+        res.status(200)
+        res.json(ret)
+        /* otra forma de hacerlo:
+        product.price = newPrice
+        await product.save() */
+      }else{
+        res.status(404)
+        res.send("No Content")  
+      }
+    }else{
+      res.status(400)
+      res.send("Bad Request")
+    }
+  }else{
+    res.status(400)
+    res.send("Bad Request")
+  }
+})
+
 app.post('/products', async (req,res) => {
-    if(req.body.productName && req.body.description && req.body.category && req.body.productCode){
+    if(req.body.productName && req.body.description && req.body.category && req.body.productCode && req.body.price){
 
       let productSearch = {
         productCode: req.body.productCode
