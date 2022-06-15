@@ -1,0 +1,16 @@
+#App Image
+NODE_ENV = development
+
+#Db Image
+MYSQL_DATABASE = test_db
+MYSQL_USER = 'admin'
+MYSQL_PASSWORD = 'root'
+MYSQL_ROOT_PASSWORD = 'root'
+
+#PhpMyAdmin Image
+PMA_HOST= db
+PMA_PORT= 3306
+PMA_ARBITRARY= 1
+
+#Ip Test
+DOMAIN= 'http://localhost:8080'

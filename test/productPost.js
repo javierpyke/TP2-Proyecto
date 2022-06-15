@@ -10,9 +10,9 @@ let testproduct =
     price: 888.50
 };
 
-describe('Post a new product: ',()=>{
+describe('Posting products: ',()=>{
     it('Should recieve the product from the DB', (done) => {
-    axios.post("http://127.0.0.1:8080/products",testproduct)
+    axios.post(process.env.DOMAIN+"/products",testproduct)
         .then((res) => {
             //console.log(res.data)
             assert.equal(res.data.productCode,testproduct.productCode,'Response contains the product sent')
@@ -23,11 +23,8 @@ describe('Post a new product: ',()=>{
         })
     });
 
-});
-
-describe('Post the same product: ',()=>{
-    it('Should get an error (Status 422)', (done) => {
-    axios.post("http://127.0.0.1:8080/products",testproduct)
+    it('Should get an error if posting the same product (Status 422)', (done) => {
+    axios.post(process.env.DOMAIN+"/products",testproduct)
         .then((res) => {
             //assert.equal(res.status,422,'Status is 422')
             //done()
@@ -36,5 +33,4 @@ describe('Post the same product: ',()=>{
             done()
         })
     });
-
 });

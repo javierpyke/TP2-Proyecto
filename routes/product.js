@@ -76,6 +76,7 @@ router.post('/products', async (req,res) => {
         let ret = await Product.create({
           ...req.body
         })
+        //console.log(ret.dataValues)
         res.status(201)
         res.json(ret.dataValues)
       }else{

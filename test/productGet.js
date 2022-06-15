@@ -3,9 +3,9 @@ const axios = require('axios');
 
 let testproduct;
 
-describe('Get all products: ',()=>{
+describe('Getting products: ',()=>{
     it('Should get all products', (done) => {
-    axios.get("http://127.0.0.1:8080/products")
+    axios.get(process.env.DOMAIN+"/products")
         .then((res) => {
             //console.log(res.data)
             testproduct=res.data[0]
@@ -17,11 +17,8 @@ describe('Get all products: ',()=>{
         })
     });
 
-});
-
-describe('Get a single product: ',()=>{
-    it('Should get a product', (done) => {
-    axios.get("http://127.0.0.1:8080/products/"+testproduct.id)
+    it('Should get a single product', (done) => {
+    axios.get(process.env.DOMAIN+"/products/"+testproduct.id)
         .then((res) => {
             //console.log(res.data)
             //assert.equal(res.status,200,'Status is 200')
@@ -32,11 +29,8 @@ describe('Get a single product: ',()=>{
         })
     });
 
-});
-
-describe('Dont get any product: ',()=>{
     it('Should NOT get a product', (done) => {
-    axios.get("http://127.0.0.1:8080/products/0")
+    axios.get(process.env.DOMAIN+"/products/0")
         .then((res) => {
             //console.log(res.data)
             assert.equal(res.status,404,'Status is 404')

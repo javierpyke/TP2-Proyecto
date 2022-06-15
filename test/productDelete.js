@@ -1,18 +1,19 @@
 const { assert } = require('chai');
 const axios = require('axios');
+require('dotenv').config(); 
 
 let params = 
 { 
     headers: {},
     data: {
-        id: 14
+        id: 16
     }
 
 }
 
-describe('Delete a product: ',()=>{
+describe('Deletion methods ',()=>{
     it('Should delete the product ', (done) => {
-    axios.delete("http://127.0.0.1:8080/products",params)
+        axios.delete(process.env.DOMAIN+"/products",params)
         .then((res) => {
             //console.log(res.data)
             assert.equal(res.status,200,'Status is 200')
@@ -22,12 +23,9 @@ describe('Delete a product: ',()=>{
         })
     });
 
-});
-
-describe('Delete a non existing product: ',()=>{
-    it('Should get an error (Status 404)', (done) => {
-    params.data.id = -1
-    axios.delete("http://127.0.0.1:8080/products",params)
+    it('Should get an error if the product does not exists (Status 404)', (done) => {
+        params.data.id = -1
+        axios.delete(process.env.DOMAIN+"/products",params)
         .then((res) => {
             //assert.equal(res.status,422,'Status is 422')
             console.log(res)
